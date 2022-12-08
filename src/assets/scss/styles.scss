@@ -1,0 +1,33 @@
+// Externals
+
+// Setup
+@import "setup/variables";
+@import "setup/functions";
+@import "setup/mixins";
+
+// Basics
+@import "basics/typography";
+@import "basics/base";
+@import "basics/helpers";
+@import "basics/layout";
+@import "basics/modals";
+@import "basics/animations";
+
+// Pages
+@import "pages/home-page";
+@import "pages/card-app";
+
+// Components
+@import "cmps/card-list";
+@import "cmps/card-preview";
+@import "cmps/app-header";
+
+.main-app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    main {
+        flex-grow: 1;
+    }
+}

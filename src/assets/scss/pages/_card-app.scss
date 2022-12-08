@@ -1,0 +1,87 @@
+.chat-app {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  @include for-wide-layout {
+    height: calc(100vh - 40px);
+    width: calc(100vw - 40px);
+    margin-top: 20px;
+    margin-inline: 20px;
+  }
+
+  .chats-header {
+    padding: 10px 16px;
+    background-color: #f0f2f5;
+    height: 58px;
+
+    .user-img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      background-size: 100%;
+      margin-top: -4px;
+      margin-left: -8px;
+      margin-right: 6px;
+    }
+
+    .new-chat-btn {
+      cursor: pointer;
+      color: #54656f;
+    }
+
+    .logout-icon {
+      cursor: pointer;
+      height: 18px;
+      margin-left: 16px;
+      color: #54656f;
+    }
+  }
+
+  .chats-display {
+    background-color: white;
+    width: 100%;
+
+    .no-chats {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+      border-block: 1px solid #e9edef;
+
+      P {
+        font-size: 0.875rem;
+        color: #8696a0;
+      }
+    }
+  }
+
+  .empty-chat-details {
+    height: 100%;
+    padding: 30px;
+    background-color: #f0f2f5;
+
+    .empty-chat-logo {
+      margin-top: -30%;
+    }
+
+    h1 {
+      margin-top: 40px;
+      display: inline-flex;
+      font-size: 32px;
+      font-weight: 300;
+      line-height: 37.5px;
+      color: #41525d;
+    }
+
+    .empty-chat-intro {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 20px;
+      color: #667781;
+    }
+  }
+}
