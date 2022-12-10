@@ -1,56 +1,7 @@
-.chat-preview {
-    cursor: pointer;
-    height: 72px;
-    padding: 12px;
-    border-top: 1px solid #e9edef;
-
-    &:last-child {
-        border-bottom: 1px solid #e9edef;
-    }
-
-    &:hover {
-        background-color: #f5f6f6;
-    }
-
-    h3 {
-        font-weight: inherit;
-        font-size: 1rem;
-        background-color: var(--primary-txt-clr);
-    }
-
-    .last-msg {
-        width: 200px;
-        font-size: 14px;
-        font-weight: inherit;
-        line-height: 20px;
-        color: #667781;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .last-msg-time {
-        width: max-content;
-        margin-top: 3px;
-        margin-right: 6px;
-        font-size: 11px;
-        line-height: 14px;
-        color: #667781;
-        align-self: flex-start;
-        font-weight: inherit;
-    }
-
-}
-
-.has-new-msgs {
-    font-weight: 500;
-
-    .last-msg-time {
-        font-weight: 700;
-        color: #1fa855;
-    }
-}
-
-.selected-chat {
-    background-color: #f0f2f5 !important;
+.card-preview {
+    position: absolute;
+    width: 42px;
+    height: 60px;
+    border: 1px solid #3d8bd3;
+    border-radius: 4px;
 }

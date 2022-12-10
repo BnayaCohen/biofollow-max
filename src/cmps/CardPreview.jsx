@@ -1,9 +1,12 @@
-export function CardPreview({ card }) {
+import { utilService } from "../services/utilService"
 
-  const cardStyle = { backgroundImage: `url(https://robohash.org/${card._id})` }
+export function CardPreview({ card }) {
+const style ={left:card.x, top:card.y}
+ 
+  // const cardStyle = { backgroundImage: `url(https://robohash.org/${card._id})` }
   return (
-    <article className="card-preview">
-      2
+    <article className="card-preview" style={style}>
+      <p>{card.num}</p>
     </article>
   )
 }
