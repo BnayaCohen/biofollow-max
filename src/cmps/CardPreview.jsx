@@ -1,11 +1,15 @@
 import { utilService } from "../services/utilService"
 
 export function CardPreview({ card }) {
-const style ={left:card.x, top:card.y}
- 
-  // const cardStyle = { backgroundImage: `url(https://robohash.org/${card._id})` }
+  const cardStyle = {
+    width: card.width,
+    height: card.width * 1.5,
+    left: card.x,
+    top: card.y,
+  }
+
   return (
-    <article className="card-preview" style={style}>
+    <article className="card-preview" style={cardStyle}>
       <p>{card.num}</p>
     </article>
   )

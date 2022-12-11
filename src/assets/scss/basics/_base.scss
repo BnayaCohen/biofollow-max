@@ -10,8 +10,9 @@ html {
 body {
   background-color: #f0f2f5;
   // background-color: #00AFB0;
-  margin: 0;
-  min-height: 100vh;
+  margin: 0 auto;
+  color: #213547;
+  // min-height: 100vh;
   font-family: Segoe UI, Helvetica Neue, Helvetica, Lucida Grande, Arial, Ubuntu, Cantarell, Fira Sans, sans-serif;
 }
 
@@ -29,6 +30,7 @@ p {
   margin: 0;
   font-weight: normal;
   padding: 0;
+  line-height: 1.1;
 }
 
 a {
@@ -46,10 +48,13 @@ a {
   padding: 4px 22px 6px;
   height: 34px;
   color: #35a0ca;
+  font-weight: 500;
+  transition: all .3s;
 
   &:hover {
     text-decoration: none;
-    background-color: #f0f2f5;
+    background-color: #e8eef6;
+    transition: all .3s;
   }
 
   * {
@@ -65,6 +70,11 @@ input {
   border-radius: 8px;
   padding: 5px 8px;
   height: 35px;
+
+  &:focus{
+    border: solid 1px #35a0ca;
+    transition: all .4s;
+  }
 }
 
 // MAC like scrollbar

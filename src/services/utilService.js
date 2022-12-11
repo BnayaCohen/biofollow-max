@@ -12,7 +12,7 @@ export const utilService = {
   // getImgAvgColor,
   // isDarkImg,
   isDarkColor,
-  gratitudePerTime,
+  get21Cards,
   getBrightColor
 }
 
@@ -85,21 +85,6 @@ function timeAgo(input) {
   }
 }
 
-function gratitudePerTime() {
-  var day = new Date();
-  var hr = day.getHours();
-  if (hr >= 0 && hr < 12) {
-      return ("Good Morning");
-  } else if (hr == 12) {
-      return ("Good Noon");
-  } else if (hr >= 12 && hr <= 17) {
-      return ("Good Afternoon");
-  } else {
-      return ("Good Evening");
-  }
-
-}
-
 function getRandomColor() {
   var letters = '0123456789ABCDEF'
   var color = '#'
@@ -110,7 +95,7 @@ function getRandomColor() {
 }
 
 function getBrightColor(idx) {
-  const clrs =  [
+  const clrs = [
     '#f2d600',
     '#ff9f1a',
     '#eb5a46',
@@ -124,20 +109,6 @@ function getBrightColor(idx) {
     '#94B49F'
   ]
   return clrs[idx]
-}
-
-export const applyDrag = (arr, dragResult) => {
-  const { removedIndex, addedIndex, payload } = dragResult
-  if (removedIndex === null && addedIndex === null) return arr
-  const result = [...arr]
-  let itemToAdd = payload
-  if (removedIndex !== null) {
-    itemToAdd = result.splice(removedIndex, 1)[0]
-  }
-  if (addedIndex !== null) {
-    result.splice(addedIndex, 0, itemToAdd)
-  }
-  return result
 }
 
 export const TypeWriter = class TypeWriter {
@@ -223,4 +194,30 @@ function isDarkColor(color) {
   const c_b = parseInt(hex.substr(4, 2), 16);
   const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
   return brightness < 155;
+}
+
+function get21Cards(windowSize, cardWidth) {
+  const cardsArr = []
+  const heightDivide = 7
+  const heightDistance = 50
+  const widthDistance = ((windowSize.width / 5) / 2) - cardWidth / 2
+
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 5; j++) {
+      const newCard = {
+        x: ((windowSize.width / 5) * j) + widthDistance,
+        y: ((windowSize.height / heightDivide) * i) + heightDistance,
+        num: (i + 1) * (j + 1) + ((4 - j) * i),
+        width: cardWidth
+      }
+      cardsArr.push(newCard)
+    }
+  }
+  cardsArr.push({
+    x: ((windowSize.width / 5) * 2) + widthDistance,
+    y: ((windowSize.height / heightDivide) * 4) + heightDistance,
+    num: 21,
+    width: cardWidth
+  })
+  return cardsArr
 }
