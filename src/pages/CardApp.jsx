@@ -10,6 +10,7 @@ export function CardApp() {
   const window = useWindowDimensions()
   const [cards, setCards] = useState(utilService.get21Cards(window, 50))
   let [isRandomising, setIsRandomising] = useState(null)
+  let [randResults, setRandResults] = useState([])
 
   useEffect(() => {
     if (!isRandomising)
@@ -23,22 +24,38 @@ export function CardApp() {
       setInterval((crds) =>
         setCards(randCards(crds))
         , 900, cards))
-
   }
 
   const onStopRandom = () => {
     clearInterval(isRandomising)
     setIsRandomising(null)
-    const numsArr = cards.sort((a, b) => a.y > b.y ? 1 : -1)
-    let isTwoSame = true
-    while (isTwoSame) {
-      numsArr.sort((a, b) => {
-        if (a.y === b.y) {isTwoSame = true
-        return 1
+
+    const numsArr = JSON.parse(JSON.stringify(cards))
+    let isTwoSame
+    do {
+      isTwoSame = false
+      let changeIdx = null
+
+      numsArr.forEach((card, i) => {
+        if (numsArr.some((c, j) => i !== j && c.y === card.y)) {
+          isTwoSame = true
+          changeIdx = i
         }
       })
+
+      if (changeIdx) {
+        numsArr[changeIdx].y = utilService.getRandomIntInc(50, window.height - window.height / 7)
+        setTimeout(() => setCards(numsArr), 300)
+      }
+    } while (isTwoSame)
+    // setTimeout(() => setCards(utilService.get21Cards(window, 50)), 2500)
+
+    if (randResults.length < 3) {
+      randResults.push(numsArr.sort((a, b) => a.y > b.y ? 1 : -1).map(c => c.num))
+      setRandResults(randResults)
     }
-    console.log(numsArr);
+
+    if (randResults.length === 3) onFinishRandom()
   }
 
   const randCards = (cards) => {
@@ -50,6 +67,11 @@ export function CardApp() {
       card.y = utilService.getRandomIntInc(startY, endY)
       return card
     })
+  }
+
+  const onFinishRandom = () => {
+    userDetails.results = [...randResults]
+    console.log(userDetails);
   }
 
   return (
