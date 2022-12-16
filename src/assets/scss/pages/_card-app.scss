@@ -3,7 +3,7 @@
     position: fixed;
     top: 40%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     z-index: 10;
     background-color: #00000070;
     border-radius: 8px;
@@ -12,9 +12,17 @@
     text-align: center;
   }
 
-
-  // .cards-display {
-  //   background-color: white;
-  //   width: 100%;
-  // }
+  .shape-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    background-color: #00000095;
+    border-radius: 8px;
+    padding: 20px;
+    color: #fff;
+    width: calc((80vw + 80vh));
+    height: 80vw;
+  }
 }

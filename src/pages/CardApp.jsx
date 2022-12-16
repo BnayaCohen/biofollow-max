@@ -23,7 +23,7 @@ export function CardApp() {
     setIsRandomising(
       setInterval((crds) =>
         setCards(randCards(crds))
-        , 900, cards))
+        , 800, cards))
   }
 
   const onStopRandom = () => {
@@ -83,6 +83,10 @@ export function CardApp() {
           :
           <button className='btn' onClick={onStopRandom}>Stop Random</button>
         }
+      </section>
+
+      <section className='shape-container'>
+
       </section>
 
 
