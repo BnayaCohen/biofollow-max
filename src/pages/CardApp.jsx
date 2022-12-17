@@ -89,8 +89,6 @@ export function CardApp() {
 
       </section>
 
-
-
       <section className='cards-display'>
         <CardList cards={cards} />
       </section>

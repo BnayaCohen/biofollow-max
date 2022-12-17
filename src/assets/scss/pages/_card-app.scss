@@ -18,11 +18,11 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 15;
-    background-color: #00000095;
-    border-radius: 8px;
+    background-color: #00000099;
+    border-radius: 3px;
     padding: 20px;
     color: #fff;
-    width: calc((80vw + 80vh));
-    height: 80vw;
+    width: calc(calc(60vw + 60vh)/2);
+    height: calc(calc(60vw + 60vh)/2);
   }
 }
