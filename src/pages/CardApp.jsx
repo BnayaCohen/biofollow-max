@@ -1,34 +1,33 @@
 import { useEffect, useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
 import { CardList } from '../cmps/CardList'
 import { useWindowDimensions } from '../customHooks/useWindowDimensions'
 import { utilService } from '../services/utilService'
 
-export function CardApp() {
+export function CardApp({ userDetails, onSubmitDetails }) {
 
-  const userDetails = useOutletContext()
   const window = useWindowDimensions()
-  const [cards, setCards] = useState(utilService.get21Cards(window, 50))
-  let [isRandomising, setIsRandomising] = useState(null)
-  let [randResults, setRandResults] = useState([])
+  const [cards, setCards] = useState([])
+  const [toggleRandom, setToggleRandom] = useState(null)
+  const [toggleCardsModal, setToggleCardsModal] = useState(false)
+  const [randResults, setRandResults] = useState([])
 
   useEffect(() => {
-    if (!isRandomising)
-      setCards(utilService.get21Cards(window, 50))
+    if (!toggleRandom)
+      setCards(utilService.get21Cards(window))
   }, [window])
 
   const onStartRandom = () => {
     setCards(randCards(cards))
 
-    setIsRandomising(
-      setInterval((crds) =>
-        setCards(randCards(crds))
+    setToggleRandom(
+      setInterval((crds) => setCards(randCards(crds))
         , 800, cards))
   }
 
   const onStopRandom = () => {
-    clearInterval(isRandomising)
-    setIsRandomising(null)
+    clearInterval(toggleRandom)
+    setToggleRandom(null)
+    setToggleCardsModal(true)
 
     const numsArr = JSON.parse(JSON.stringify(cards))
     let isTwoSame
@@ -44,7 +43,7 @@ export function CardApp() {
       })
 
       if (changeIdx) {
-        numsArr[changeIdx].y = utilService.getRandomIntInc(50, window.height - window.height / 7)
+        numsArr[changeIdx].y = utilService.getRandomIntInc(50, window.height - 130)
         setTimeout(() => setCards(numsArr), 300)
       }
     } while (isTwoSame)
@@ -55,12 +54,22 @@ export function CardApp() {
       setRandResults(randResults)
     }
 
-    if (randResults.length === 3) onFinishRandom()
+  }
+
+  const onCardSelect = () => {
+    if (randResults.length === 3) {
+      onFinishPlay()
+      setToggleCardsModal(false)
+      return
+    }
+
+    setToggleCardsModal(false)
+    onStartRandom()
   }
 
   const randCards = (cards) => {
     const [startX, endX] = [((window.width / 5) / 2) - cards[0].width / 2, window.width - cards[0].width - 5]
-    const [startY, endY] = [50, window.height - window.height / 7]
+    const [startY, endY] = [50, window.height - 130]
 
     return cards.map(card => {
       card.x = utilService.getRandomIntInc(startX, endX)
@@ -69,25 +78,43 @@ export function CardApp() {
     })
   }
 
-  const onFinishRandom = () => {
+  const onFinishPlay = () => {
     userDetails.results = [...randResults]
     console.log(userDetails);
   }
 
   return (
     <div className='card-app'>
-      <section className='action-panel'>
-        <h1>{userDetails.fullname}</h1>
-        {!isRandomising ?
-          <button className='btn' onClick={onStartRandom}>Start Random</button>
+      <section className={'action-panel ' + (toggleRandom ? 'on-random' : '')} >
+        {!toggleRandom ? <h1>Press to shuffle the cards</h1> : null}
+        {!toggleRandom ?
+          <button className='btn' onClick={onStartRandom}>Start</button>
           :
-          <button className='btn' onClick={onStopRandom}>Stop Random</button>
+          <button className='btn' onClick={onStopRandom}>Stop shuffle</button>
         }
       </section>
 
-      <section className='shape-container'>
+      {toggleCardsModal ? <>
+        <div className='screen'></div>
+        <section className='shape-container'>
+          <h1 className='card-select-title'>{randResults.length === 3 ? 'Last select...' : 'Select card to continue'}</h1>
+          <section className='card-list'>
+            {utilService.get6Cards(window).map((card, i) =>
+              <article key={i} className="card-item" onClick={onCardSelect} style={{ width: card.width, height: card.width * 1.5 }}>
+                <p>{card.num}</p>
+              </article>)}
+          </section>
+        </section>
+      </> : null}
 
-      </section>
+      {randResults.length === 3 && !toggleCardsModal ? <>
+        <div className='screen'></div>
+        <section className='finish-modal-container'>
+          <h1>Thank you for using BioFollow!</h1>
+          <h3>Your details has been submitted successfully.</h3>
+          <button className='btn' onClick={onSubmitDetails}>Press here to start again</button>
+        </section>
+      </> : null}
 
       <section className='cards-display'>
         <CardList cards={cards} />

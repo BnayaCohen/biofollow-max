@@ -13,6 +13,7 @@ export const utilService = {
   // isDarkImg,
   isDarkColor,
   get21Cards,
+  get6Cards,
   getBrightColor
 }
 
@@ -196,9 +197,10 @@ function isDarkColor(color) {
   return brightness < 155;
 }
 
-function get21Cards(windowSize, cardWidth) {
+function get21Cards(windowSize) {
   const cardsArr = []
-  const heightDivide = 7
+  const cardWidth = windowSize.width / 6 > 70 ? 70 : windowSize.width / 6
+  const heightDivide = cardWidth / 12 < 5.5 ? 5.5 : cardWidth / 12
   const heightDistance = 50
   const widthDistance = ((windowSize.width / 5) / 2) - cardWidth / 2
 
@@ -219,5 +221,21 @@ function get21Cards(windowSize, cardWidth) {
     num: 21,
     width: cardWidth
   })
+  return cardsArr
+}
+
+function get6Cards(windowSize) {
+  const cardsArr = []
+  const cardWidth = windowSize.width / 6 > 55 ? 55 : windowSize.width / 6
+
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      const newCard = {
+        num: getRandomIntInc(1, 50),
+        width: cardWidth
+      }
+      cardsArr.push(newCard)
+    }
+  }
   return cardsArr
 }

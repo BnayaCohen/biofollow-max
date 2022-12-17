@@ -13,9 +13,8 @@ function App() {
 
         <main>
           <Routes>
-            <Route path='/' element={<HomePage />}>
-              <Route path='/play' element={<CardApp />} />
-            </Route>
+            <Route path='/' element={<HomePage />} />
+              
           </Routes>
         </main>
       </div>

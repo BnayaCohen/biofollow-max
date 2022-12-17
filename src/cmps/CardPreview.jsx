@@ -1,5 +1,3 @@
-import { utilService } from "../services/utilService"
-
 export function CardPreview({ card }) {
   const cardStyle = {
     width: card.width,
