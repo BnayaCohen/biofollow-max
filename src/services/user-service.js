@@ -14,7 +14,8 @@ const USER_STORAGE_KEY = 'loggedinUser'
 
 async function query(filterBy = null) {
   try {
-    return await httpService.get('user', { params: filterBy })
+    const users = await httpService.get('user', { params: filterBy })
+    return users.reverse()
   } catch (err) {
     console.log('Cannot get users', err)
   }

@@ -1,9 +1,9 @@
-import { HashRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
+import { HashRouter as Router, Route, Routes } from 'react-router-dom'
 
 import './assets/scss/styles.scss'
 import { AppHeader } from './cmps/AppHeader';
 import { HomePage } from './pages/HomePage';
-import { CardApp } from './pages/CardApp';
+import { AdminPage } from './pages/AdminPage';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <main>
           <Routes>
             <Route path='/' element={<HomePage />} />
-              
+            <Route path='/admin' element={<AdminPage />} />
           </Routes>
         </main>
       </div>
