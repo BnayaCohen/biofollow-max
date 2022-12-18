@@ -1,14 +1,16 @@
 import { useRef, useEffect, useState } from 'react'
 import { CardApp } from './CardApp'
 import Logo from '../assets/imgs/edited-logo.png'
+import { i18nService } from '../services/i18n-service'
 
 export function HomePage() {
 
   const nameInputRef = useRef()
   const [userDetails, setUserDetails] = useState({})
   const [isPlaying, setIsPlaying] = useState(false)
-  const pattern = /^[a-zA-Z]{2,40}( [a-zA-Z]{2,40})+$/
+  const namePattern = /^[a-zA-Zא-ת]{2,40}( [a-zA-Zא-ת]{2,40})+$/
   const [validateClass, setValidateClass] = useState('')
+  const langType = 'he'
 
   useEffect(() => {
   }, [])
@@ -16,13 +18,13 @@ export function HomePage() {
   const onStartPlay = (ev) => {
     ev.preventDefault()
     const fullname = nameInputRef.current.value.trim()
-    if (!pattern.test(fullname)) return
+    if (!namePattern.test(fullname)) return
     setUserDetails({ fullname })
     setIsPlaying(true)
   }
 
   const validateInput = () => {
-    if (pattern.test(nameInputRef.current.value.trim())) setValidateClass('green')
+    if (namePattern.test(nameInputRef.current.value.trim())) setValidateClass('green')
     else setValidateClass('red')
   }
 
@@ -34,13 +36,13 @@ export function HomePage() {
     {!isPlaying ?
       <section className='home-page flex column auto-center'>
         <img src={Logo} className="logo" />
-        <h1>BioFollow</h1>
-        <p>Enter your fullname</p>
+        <h1>{i18nService.getTranslation('title',langType)}</h1>
+        <p>{i18nService.getTranslation('enter-name',langType)}</p>
 
         <form onSubmit={onStartPlay}>
-          <input className={'login-input ' + validateClass} ref={nameInputRef} onChange={validateInput} type="text" placeholder='Enter your full name' />
+          <input className={'login-input ' + validateClass} ref={nameInputRef} onChange={validateInput} type="text" placeholder={i18nService.getTranslation('enter-name-input',langType)} />
         </form>
-        <button className='btn' onClick={onStartPlay}>Continue</button>
+        <button className='btn' onClick={onStartPlay}>{i18nService.getTranslation('continue',langType)}</button>
       </section>
       :
       <CardApp userDetails={userDetails} onSubmitDetails={onSubmitDetails} />

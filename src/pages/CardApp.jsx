@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { CardList } from '../cmps/CardList'
 import { useWindowDimensions } from '../customHooks/useWindowDimensions'
+import { i18nService } from '../services/i18n-service'
 import { userService } from '../services/user-service'
 import { utilService } from '../services/utilService'
 
@@ -11,6 +12,7 @@ export function CardApp({ userDetails, onSubmitDetails }) {
   const [toggleRandom, setToggleRandom] = useState(null)
   const [toggleCardsModal, setToggleCardsModal] = useState(false)
   const [randResults, setRandResults] = useState([])
+  const langType = 'he'
 
   useEffect(() => {
     if (!toggleRandom)
@@ -92,7 +94,7 @@ export function CardApp({ userDetails, onSubmitDetails }) {
       {randResults.length === 0 || toggleRandom ? <section className={'action-panel ' + (toggleRandom ? 'on-random' : '')} >
         {!toggleRandom ? <h1>Press to shuffle the cards</h1> : null}
         {!toggleRandom ?
-          <button className='btn' onClick={onStartRandom}>Start</button>
+          <button className='btn' onClick={onStartRandom}>{i18nService.getTranslation('start', langType)}</button>
           :
           <button className='btn' onClick={onStopRandom}>Stop shuffle</button>
         }
