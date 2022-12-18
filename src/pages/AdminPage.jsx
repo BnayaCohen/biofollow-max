@@ -13,9 +13,19 @@ export function AdminPage() {
     })()
   }, [])
 
-
   const handleChange = ({ target }) => {
     setFilterName(target.value)
+  }
+
+  const onRemoveUser = async (user) => {
+    if (confirm('האם למחוק את ' + user.fullname)){
+       userService.removeUser(user._id)
+       setUsers(await userService.query({ txt: filterName }))
+      }
+  }
+
+  const onShowUser = (user) => {
+    console.log(user);
   }
 
   return (<>
@@ -29,8 +39,8 @@ export function AdminPage() {
           {users.map((user, i) =>
             <article key={i} className="user-preview flex space-between">
               <div className='user-actions'>
-                <button className='user-btn'>הסר</button>
-                <button className='user-btn'>הצג</button>
+                <button className='remove-user-btn' onClick={() => onRemoveUser(user)}>הסר</button>
+                <button className='show-user-btn' onClick={() => onShowUser(user)}>הצג</button>
               </div>
               <p>{user.fullname}</p>
             </article>)}

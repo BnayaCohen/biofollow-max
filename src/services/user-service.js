@@ -7,6 +7,7 @@ export const userService = {
   // logout,
   // getLoggedInUser,
   addUser,
+  removeUser,
   query,
 }
 
@@ -38,6 +39,15 @@ async function addUser(userToAdd) {
   } catch (err) {
     console.log(err)
     throw new Error('Failed to add user, try again')
+  }
+}
+
+async function removeUser(userId) {
+  try {
+    return httpService.delete(`user/${userId}`)
+  } catch (err) {
+    console.log(err)
+    throw new Error('Failed to delete user, try again')
   }
 }
 

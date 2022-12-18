@@ -7,16 +7,23 @@ export function HomePage() {
   const nameInputRef = useRef()
   const [userDetails, setUserDetails] = useState({})
   const [isPlaying, setIsPlaying] = useState(false)
+  const pattern = /^[a-zA-Z]{2,40}( [a-zA-Z]{2,40})+$/
+  const [validateClass, setValidateClass] = useState('')
 
   useEffect(() => {
   }, [])
 
   const onStartPlay = (ev) => {
     ev.preventDefault()
-    const fullname = nameInputRef.current.value
+    const fullname = nameInputRef.current.value.trim()
+    if (!pattern.test(fullname)) return
     setUserDetails({ fullname })
-    if (!fullname) return
     setIsPlaying(true)
+  }
+
+  const validateInput = () => {
+    if (pattern.test(nameInputRef.current.value.trim())) setValidateClass('green')
+    else setValidateClass('red')
   }
 
   const onSubmitDetails = () => {
@@ -31,7 +38,7 @@ export function HomePage() {
         <p>Enter your fullname</p>
 
         <form onSubmit={onStartPlay}>
-          <input className='login-input' ref={nameInputRef} type="text" placeholder='Enter your full name' />
+          <input className={'login-input ' + validateClass} ref={nameInputRef} onChange={validateInput} type="text" placeholder='Enter your full name' />
         </form>
         <button className='btn' onClick={onStartPlay}>Continue</button>
       </section>
