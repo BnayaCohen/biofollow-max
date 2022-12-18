@@ -5,12 +5,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    background-color: #00000070;
+    background-color: #00000065;
     border-radius: 8px;
-    padding: 20px;
+    padding: 20px 40px;
     color: #fff;
     text-align: center;
     transition: .4s all;
+    box-shadow: 0 0 8px 2px rgb(0 0 0 / 20%);
   }
 
   .on-random{
@@ -28,7 +29,7 @@
     // padding: 40px;
     color: #fff;
     width: calc(calc(55vw + 55vh)/2);
-    height: calc(calc(65vw + 65vh)/2);
+    height: calc(calc(60vw + 60vh)/2);
     text-align: center;
 
     .card-select-title {
@@ -50,13 +51,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        // transition: .6s;
+        transition: .1s all;
         font-size: 1.5rem;
         background-color: #3d8bd3;
         cursor: pointer;
 
         &:active {
           background-color: #7f91a3;
+        }
+
+        &:hover{
+          transform: scale(1.03);
+          background-color: #669ccf;
         }
       }
     }
@@ -78,6 +84,6 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 16px;
+    gap: 28px;
   }
 }

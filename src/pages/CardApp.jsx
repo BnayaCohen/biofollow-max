@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { CardList } from '../cmps/CardList'
 import { useWindowDimensions } from '../customHooks/useWindowDimensions'
+import { userService } from '../services/user-service'
 import { utilService } from '../services/utilService'
 
 export function CardApp({ userDetails, onSubmitDetails }) {
@@ -50,10 +51,12 @@ export function CardApp({ userDetails, onSubmitDetails }) {
     // setTimeout(() => setCards(utilService.get21Cards(window, 50)), 2500)
 
     if (randResults.length < 3) {
-      randResults.push(numsArr.sort((a, b) => a.y > b.y ? 1 : -1).map(c => c.num))
+      randResults.push(numsArr
+        .sort((a, b) => a.y > b.y ? 1 : -1)
+        .map(card => card.num / 10 >= 1 ? card.num + '' : '0' + card.num)
+      )
       setRandResults(randResults)
     }
-
   }
 
   const onCardSelect = () => {
@@ -78,21 +81,22 @@ export function CardApp({ userDetails, onSubmitDetails }) {
     })
   }
 
-  const onFinishPlay = () => {
+  const onFinishPlay = async () => {
     userDetails.results = [...randResults]
     console.log(userDetails);
+    // console.log(await userService.addUser(userDetails))
   }
 
   return (
     <div className='card-app'>
-      <section className={'action-panel ' + (toggleRandom ? 'on-random' : '')} >
+      {randResults.length === 0 || toggleRandom ? <section className={'action-panel ' + (toggleRandom ? 'on-random' : '')} >
         {!toggleRandom ? <h1>Press to shuffle the cards</h1> : null}
         {!toggleRandom ?
           <button className='btn' onClick={onStartRandom}>Start</button>
           :
           <button className='btn' onClick={onStopRandom}>Stop shuffle</button>
         }
-      </section>
+      </section> : null}
 
       {toggleCardsModal ? <>
         <div className='screen'></div>

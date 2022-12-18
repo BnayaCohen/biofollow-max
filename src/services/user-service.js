@@ -6,6 +6,7 @@ export const userService = {
   // login,
   // logout,
   // getLoggedInUser,
+  addUser,
   query,
 }
 
@@ -25,6 +26,17 @@ async function getById(userId) {
   } catch (err) {
     console.log(err)
     console.error('Something went wrong try again later')
+  }
+}
+
+async function addUser(userToAdd) {
+  try {
+    const user = httpService.post('user', userToAdd)
+    // _saveToSession(user)
+    return user
+  } catch (err) {
+    console.log(err)
+    throw new Error('Failed to add user, try again')
   }
 }
 

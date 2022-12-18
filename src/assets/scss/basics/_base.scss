@@ -46,15 +46,18 @@ a {
   border: none;
   border-radius: 4px;
   padding: 4px 22px 6px;
-  height: 34px;
+  // height: 34px;
   color: #35a0ca;
+  font-size: 1.1rem;
   font-weight: 500;
   transition: all .3s;
+  min-width: 120px;
 
   &:hover {
     text-decoration: none;
     background-color: #e8eef6;
-    transition: all .2s;
+    transform: scale(1.05);
+    box-shadow: 0 0 4px 1px rgb(0 0 0 / 10%);
   }
 
   * {
@@ -72,7 +75,7 @@ input {
   height: 35px;
   text-align: center;
 
-  &:focus{
+  &:focus {
     border: solid 1px #35a0ca;
     transition: all .4s;
   }
