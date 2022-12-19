@@ -6,10 +6,12 @@ import { i18nService } from '../services/i18n-service'
 export function HomePage() {
 
   const nameInputRef = useRef()
+  const digitInputRef = useRef()
   const [userDetails, setUserDetails] = useState({})
   const [isPlaying, setIsPlaying] = useState(false)
   const namePattern = /^[a-zA-Zא-ת]{2,40}( [a-zA-Zא-ת]{2,40})+$/
-  const [validateClass, setValidateClass] = useState('')
+  const [validateNameClass, setValidateNameClass] = useState('')
+  const [validateDigitClass, setValidateDigitClass] = useState('')
   const langType = 'he'
 
   useEffect(() => {
@@ -18,14 +20,20 @@ export function HomePage() {
   const onStartPlay = (ev) => {
     ev.preventDefault()
     const fullname = nameInputRef.current.value.trim()
-    if (!namePattern.test(fullname)) return
-    setUserDetails({ fullname })
+    const digits = digitInputRef.current.value.trim()
+    if (!namePattern.test(fullname) || !(digits.length > 0 && digits.length < 5)) return
+    setUserDetails({ fullname, digits })
     setIsPlaying(true)
   }
 
   const validateInput = () => {
-    if (namePattern.test(nameInputRef.current.value.trim())) setValidateClass('green')
-    else setValidateClass('red')
+    if (namePattern.test(nameInputRef.current.value.trim())) setValidateNameClass('green')
+    else setValidateNameClass('red')
+  }
+
+  const validateDigitInput = () => {
+    if (digitInputRef.current.value.trim().length > 0 && digitInputRef.current.value.trim().length < 5) setValidateDigitClass('green')
+    else setValidateDigitClass('red')
   }
 
   const onSubmitDetails = () => {
@@ -36,13 +44,14 @@ export function HomePage() {
     {!isPlaying ?
       <section className='home-page flex column auto-center'>
         <img src={Logo} className="logo" />
-        <h1>{i18nService.getTranslation('title',langType)}</h1>
-        <p>{i18nService.getTranslation('enter-name',langType)}</p>
+        <h1>{i18nService.getTranslation('title', langType)}</h1>
+        <p>{i18nService.getTranslation('enter-name', langType)}</p>
 
-        <form onSubmit={onStartPlay}>
-          <input className={'login-input ' + validateClass} ref={nameInputRef} onChange={validateInput} type="text" placeholder={i18nService.getTranslation('enter-name-input',langType)} />
+        <form className='flex column' style={{ gap: '4px' }} onSubmit={onStartPlay}>
+          <input className={'login-input ' + validateNameClass} ref={nameInputRef} onChange={validateInput} type="text" placeholder={i18nService.getTranslation('enter-name-input', langType)} />
+          <input className={'login-input ' + validateDigitClass} ref={digitInputRef} onChange={validateDigitInput} type="text" placeholder={i18nService.getTranslation('enter-digit-input', langType)} />
         </form>
-        <button className='btn' onClick={onStartPlay}>{i18nService.getTranslation('continue',langType)}</button>
+        <button className='btn' onClick={onStartPlay}>{i18nService.getTranslation('continue', langType)}</button>
       </section>
       :
       <CardApp userDetails={userDetails} onSubmitDetails={onSubmitDetails} />

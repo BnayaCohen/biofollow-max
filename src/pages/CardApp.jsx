@@ -92,18 +92,18 @@ export function CardApp({ userDetails, onSubmitDetails }) {
   return (
     <div className='card-app'>
       {randResults.length === 0 || toggleRandom ? <section className={'action-panel ' + (toggleRandom ? 'on-random' : '')} >
-        {!toggleRandom ? <h1>Press to shuffle the cards</h1> : null}
+        {!toggleRandom ? <h1>{i18nService.getTranslation('press-to-shuffle', langType)}</h1> : null}
         {!toggleRandom ?
           <button className='btn' onClick={onStartRandom}>{i18nService.getTranslation('start', langType)}</button>
           :
-          <button className='btn' onClick={onStopRandom}>Stop shuffle</button>
+          <button className='btn' onClick={onStopRandom}>{i18nService.getTranslation('stop-shuffle', langType)}</button>
         }
       </section> : null}
 
       {toggleCardsModal ? <>
         <div className='screen'></div>
         <section className='shape-container'>
-          <h1 className='card-select-title'>{randResults.length === 3 ? 'Last select...' : 'Select card to continue'}</h1>
+          <h1 className='card-select-title'>{i18nService.getTranslation(randResults.length === 3 ? 'last-card' : 'select-card', langType)}</h1>
           <section className='card-list'>
             {utilService.get6Cards(window).map((card, i) =>
               <article key={i} className="card-item" onClick={onCardSelect} style={{ width: card.width, height: card.width * 1.5 }}>
@@ -116,9 +116,9 @@ export function CardApp({ userDetails, onSubmitDetails }) {
       {randResults.length === 3 && !toggleCardsModal ? <>
         <div className='screen'></div>
         <section className='finish-modal-container'>
-          <h1>Thank you for using BioFollow!</h1>
-          <h3>Your details has been submitted successfully.</h3>
-          <button className='btn' onClick={onSubmitDetails}>Press here to start again</button>
+          <h1>{i18nService.getTranslation('biofollow-thanks', langType)}</h1>
+          <h3>{i18nService.getTranslation('biofollow-submitted', langType)}</h3>
+          <button className='btn' onClick={onSubmitDetails}>{i18nService.getTranslation('biofollow-back', langType)}</button>
         </section>
       </> : null}
 
