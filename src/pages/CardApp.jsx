@@ -5,14 +5,13 @@ import { i18nService } from '../services/i18n-service'
 import { userService } from '../services/user-service'
 import { utilService } from '../services/utilService'
 
-export function CardApp({ userDetails, onSubmitDetails }) {
+export function CardApp({ userDetails, onSubmitDetails,langType }) {
 
   const window = useWindowDimensions()
   const [cards, setCards] = useState([])
   const [toggleRandom, setToggleRandom] = useState(null)
   const [toggleCardsModal, setToggleCardsModal] = useState(false)
   const [randResults, setRandResults] = useState([])
-  const langType = 'he'
 
   useEffect(() => {
     if (!toggleRandom)

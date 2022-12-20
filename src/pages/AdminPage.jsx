@@ -5,7 +5,9 @@ import { userService } from '../services/user-service'
 export function AdminPage() {
 
   const [filterName, setFilterName] = useState('')
+  const [toggleShowModal, setToggleShowModal] = useState(false)
   const [users, setUsers] = useState([])
+  const [currUser, setCurrUser] = useState(null)
 
   useEffect(() => {
     ; (async () => {
@@ -18,14 +20,16 @@ export function AdminPage() {
   }
 
   const onRemoveUser = async (user) => {
-    if (confirm('האם למחוק את ' + user.fullname)){
-       userService.removeUser(user._id)
-       setUsers(await userService.query({ txt: filterName }))
-      }
+    if (confirm('האם למחוק את ' + user.fullname)) {
+      userService.removeUser(user._id)
+      setUsers(await userService.query({ txt: filterName }))
+    }
   }
 
   const onShowUser = (user) => {
     console.log(user);
+    setCurrUser(user)
+    setToggleShowModal(true)
   }
 
   return (<>
@@ -44,6 +48,36 @@ export function AdminPage() {
               </div>
               <p>{user.fullname}</p>
             </article>)}
+        </section>
+        : null}
+      {toggleShowModal ?
+        <section className='modal-wrapper'>
+          <div className='modal-content'>
+            <h1 onClick={() => { setToggleShowModal(false) }}>X</h1>
+            <h2>{currUser.fullname}</h2>
+            <div>{currUser.digits}</div>
+            <h3>{new Date(currUser.createdAt).toLocaleTimeString('he-IL', { day: "numeric", month: "numeric", year: "numeric", hour: '2-digit', minute: '2-digit' })}</h3>
+            <section className='flex space-around' style={{ gap: '40px', marginTop: '20px' }}>
+              <div>
+                {currUser.results[2].map((num, i) =>
+                  <article key={i}>
+                    {num}
+                  </article>)}
+              </div>
+              <div>
+                {currUser.results[1].map((num, i) =>
+                  <article key={i}>
+                    {num}
+                  </article>)}
+              </div>
+              <div>
+                {currUser.results[0].map((num, i) =>
+                  <article key={i}>
+                    {num}
+                  </article>)}
+              </div>
+            </section>
+          </div>
         </section>
         : null}
 

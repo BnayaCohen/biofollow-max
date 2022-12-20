@@ -3,7 +3,7 @@ import { CardApp } from './CardApp'
 import Logo from '../assets/imgs/edited-logo.png'
 import { i18nService } from '../services/i18n-service'
 
-export function HomePage() {
+export function HomePage({ langType }) {
 
   const nameInputRef = useRef()
   const digitInputRef = useRef()
@@ -12,9 +12,9 @@ export function HomePage() {
   const namePattern = /^[a-zA-Zא-ת]{2,40}( [a-zA-Zא-ת]{2,40})+$/
   const [validateNameClass, setValidateNameClass] = useState('')
   const [validateDigitClass, setValidateDigitClass] = useState('')
-  const langType = 'he'
 
   useEffect(() => {
+
   }, [])
 
   const onStartPlay = (ev) => {
@@ -54,7 +54,7 @@ export function HomePage() {
         <button className='btn' onClick={onStartPlay}>{i18nService.getTranslation('continue', langType)}</button>
       </section>
       :
-      <CardApp userDetails={userDetails} onSubmitDetails={onSubmitDetails} />
+      <CardApp userDetails={userDetails} onSubmitDetails={onSubmitDetails} langType={langType} />
     }
   </>
   )

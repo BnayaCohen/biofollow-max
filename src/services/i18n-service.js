@@ -49,11 +49,11 @@ const gTrans = {
   },
   'last-card': {
     en: 'Last select...',
-    he: 'פעם אחרונה',
+    he: 'בחירה אחרונה',
   },
   'biofollow-thanks': {
     en: 'Thank you for using BioFollow',
-    he: 'תודה שהשתמשתם בביו פולו',
+    he: 'תודה שהשתמשת בביו פולו',
   },
   'biofollow-submitted': {
     en: 'Your details has been submitted successfully',
