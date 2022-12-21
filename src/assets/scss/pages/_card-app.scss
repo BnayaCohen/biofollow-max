@@ -1,11 +1,14 @@
 .card-app {
+  background-color: #FCF1E1;
+  height: 100vh;
+
   .action-panel {
     position: fixed;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    background-color: #00000065;
+    background-color: #00000075;
     // border-radius: 8px;
     width: 102%;
     padding: 20px 40px;
