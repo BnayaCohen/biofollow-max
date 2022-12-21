@@ -45,7 +45,7 @@ export function HomePage({ langType }) {
       <section className='home-page flex column auto-center'>
         <img src={Logo} className="logo" />
         <h1>{i18nService.getTranslation('title', langType)}</h1>
-        <p>{i18nService.getTranslation('enter-name', langType)}</p>
+        <p>{i18nService.getTranslation('enter-details', langType)}</p>
 
         <form className='flex column' style={{ gap: '4px' }} onSubmit={onStartPlay}>
           <input className={'login-input ' + validateNameClass} ref={nameInputRef} onChange={validateInput} type="text" placeholder={i18nService.getTranslation('enter-name-input', langType)} />

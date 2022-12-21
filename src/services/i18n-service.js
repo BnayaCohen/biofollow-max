@@ -15,9 +15,9 @@ const gTrans = {
     en: 'Language',
     he: 'שפה',
   },
-  'enter-name': {
-    en: 'Enter your fullname',
-    he: 'הכנס שם מלא',
+  'enter-details': {
+    en: 'Enter your details',
+    he: 'הכנס פרטים',
   },
   'enter-name-input': {
     en: 'Fullname',
