@@ -10,7 +10,7 @@ export function CardPreview({ card }) {
   }
 
   return (
-    <article className="card-preview color-change vibrate-1 flex align-center justify-center" style={cardStyle}>
+    <article className={`card-preview color-change-${utilService.getRandomIntInc(2, 5)}x`} style={cardStyle}>
       <p>{card.num}</p>
     </article>
   )

@@ -3,6 +3,9 @@
     border: 1px solid #3d8bd3;
     border-radius: 4px;
     transition: .6s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .vibrate-1{animation:vibrate-1 4s ease-in-out 1s infinite forwards}
@@ -23,3 +26,11 @@
 @keyframes color-change-4x{0%{background:#19dcea}33.3333%{background:#b22cff}66.666%{background:#ea2222}100%{background:#f5be10}}
 
 @keyframes color-change-5x{0%{background:#19dcea}25%{background:#b22cff}50%{background:#ea2222}75%{background:#f5be10}100%{background:#3bd80d}}
+
+
+
+.select-change-0{animation:select-change-0 2s linear infinite alternate both}
+@keyframes select-change-0{0%{background:#5e98d3}100%{background:#38cddd}}
+
+.select-change-1{animation:select-change-1 2s linear infinite alternate both}
+@keyframes select-change-1{0%{background:#308dbb}100%{background:#5e98d3}}

@@ -8,8 +8,8 @@ function getTranslation(key, lang) {
 
 const gTrans = {
   title: {
-    en: 'BioFollow',
-    he: 'ביו פולו'
+    en: 'Welcome to BioFollow',
+    he: 'ברוכים הבאים לביו פולו'
   },
   language: {
     en: 'Language',

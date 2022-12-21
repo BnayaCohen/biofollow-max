@@ -5,7 +5,7 @@ import { i18nService } from '../services/i18n-service'
 import { userService } from '../services/user-service'
 import { utilService } from '../services/utilService'
 
-export function CardApp({ userDetails, onSubmitDetails,langType }) {
+export function CardApp({ userDetails, onSubmitDetails, langType }) {
 
   const window = useWindowDimensions()
   const [cards, setCards] = useState([])
@@ -105,7 +105,7 @@ export function CardApp({ userDetails, onSubmitDetails,langType }) {
           <h1 className='card-select-title'>{i18nService.getTranslation(randResults.length === 3 ? 'last-card' : 'select-card', langType)}</h1>
           <section className='card-list'>
             {utilService.get6Cards(window).map((card, i) =>
-              <article key={i} className="card-item" onClick={onCardSelect} style={{ width: card.width, height: card.width * 1.5 }}>
+              <article key={i} className={`card-item select-change-${i % 2}`} onClick={onCardSelect} style={{ width: card.width, height: card.width * 1.5 }}>
                 <p>{card.num}</p>
               </article>)}
           </section>
