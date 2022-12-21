@@ -7,6 +7,15 @@
   padding: 8px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 
+  svg {
+    margin-right: 8px;
+    cursor: pointer;
+
+    &:hover {
+      filter: drop-shadow(0 0 2px rgb(201, 201, 201));
+    }
+  }
+
   .select-lang-container {
     gap: 4px;
 
@@ -24,7 +33,7 @@
       }
 
     }
-    
+
     .selected {
       background-color: white;
     }

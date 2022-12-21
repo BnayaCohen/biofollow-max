@@ -2,6 +2,7 @@ import { httpService } from './http-service.js'
 
 export const userService = {
   getById,
+  isUserExist,
   // signup,
   // login,
   // logout,
@@ -48,6 +49,15 @@ async function removeUser(userId) {
   } catch (err) {
     console.log(err)
     throw new Error('Failed to delete user, try again')
+  }
+}
+
+async function isUserExist(fullname, digits) {
+  try {
+    return await httpService.get('user/isExist', { params: {fullname, digits} })
+  } catch (err) {
+    console.log(err)
+    console.error('Something went wrong try again later')
   }
 }
 

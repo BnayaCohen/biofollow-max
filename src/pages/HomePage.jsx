@@ -1,7 +1,8 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useState } from 'react'
 import { CardApp } from './CardApp'
 import Logo from '../assets/imgs/edited-logo.png'
 import { i18nService } from '../services/i18n-service'
+import { userService } from '../services/user-service'
 
 export function HomePage({ langType }) {
 
@@ -13,15 +14,14 @@ export function HomePage({ langType }) {
   const [validateNameClass, setValidateNameClass] = useState('')
   const [validateDigitClass, setValidateDigitClass] = useState('')
 
-  useEffect(() => {
-
-  }, [])
-
-  const onStartPlay = (ev) => {
+  const onStartPlay = async (ev) => {
     ev.preventDefault()
     const fullname = nameInputRef.current.value.trim()
     const digits = digitInputRef.current.value.trim()
+
     if (!namePattern.test(fullname) || !(digits.length > 0 && digits.length < 5)) return
+    if (await userService.isUserExist(fullname, digits)) return
+
     setUserDetails({ fullname, digits })
     setIsPlaying(true)
   }
@@ -47,7 +47,7 @@ export function HomePage({ langType }) {
         <h1>{i18nService.getTranslation('title', langType)}</h1>
         <p>{i18nService.getTranslation('enter-details', langType)}</p>
 
-        <form className='flex column' style={{ gap: '4px' }} onSubmit={onStartPlay}>
+        <form className='flex column' style={{ gap: '5px' }} onSubmit={onStartPlay}>
           <input className={'login-input ' + validateNameClass} ref={nameInputRef} onChange={validateInput} type="text" placeholder={i18nService.getTranslation('enter-name-input', langType)} />
           <input className={'login-input ' + validateDigitClass} ref={digitInputRef} onChange={validateDigitInput} type="text" placeholder={i18nService.getTranslation('enter-digit-input', langType)} />
         </form>
