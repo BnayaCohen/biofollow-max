@@ -1,28 +1,95 @@
 .admin-page {
-  padding: 40px;
-  // height: 100vh;
-  // width: 100%;
+  padding: 20px;
+  background-color: #FCF1E1;
+  height: 100vh;
+
+  .user-preview {
+    width: 100vw;
+    padding: 8px 10px;
+    border-top: 1px solid gray;
+
+    .user-btn {
+      cursor: pointer;
+      font-family: inherit;
+      background-color: #fff;
+      border: .5px solid gray;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: all .3s;
+      margin: 0 6px;
+
+      &:hover {
+        text-decoration: none;
+        background-color: #e8eef6;
+        transform: scale(1.05);
+        box-shadow: 0 0 4px 1px rgb(0 0 0 / 10%);
+      }
+    }
+
+    .red {
+      background-color: lightcoral;
+    }
+  }
 
   .logo {
-    width: 120px;
+    width: 100px;
     margin-bottom: 20px;
+    filter: blur(0.5px);
   }
 
   h1 {
-    margin-top: 8px;
-    font-size: 2.2rem;
-    font-weight: 300;
-    color: #41525d;
+    font-size: 1.2rem;
+    // color: #41525d;
+    font-weight: 500;
   }
 
   p {
-    font-size: 1.1rem;
-    color: #8696a0;
-    margin-bottom: 16px;
+    font-size: 1rem;
+    // color: #8696a0;
   }
 
   .filter-input {
     background-color: #fff;
     width: 220px;
+    margin-bottom: 12px;
   }
+}
+
+.bg-1 {
+  background-color: #82c8ee;
+}
+
+.user-show-container{
+  
+  .close-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px 12px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: grey;
+    border-radius: 8px;
+    margin: 3px 2px;
+    
+    &:hover{
+      background-color: #34acef;
+    }
+    
+    &:active{
+      background-color: #34acef;
+    }
+  }
+  .bg-1{
+    padding: 2px;
+    border-radius: 3px;
+    margin-bottom: 2px;
+  }
+
+  div{
+    margin: 5px;
+  }
+  
 }

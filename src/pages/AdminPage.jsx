@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import Logo from '../assets/imgs/edited-logo.png'
 import { userService } from '../services/user-service'
+import { utilService } from '../services/utilService'
+
 
 export function AdminPage() {
 
@@ -15,8 +17,9 @@ export function AdminPage() {
     })()
   }, [])
 
-  const handleChange = ({ target }) => {
+  const handleChange = async ({ target }) => {
     setFilterName(target.value)
+    setUsers(await userService.query({ txt: target.value }))
   }
 
   const onRemoveUser = async (user) => {
@@ -27,54 +30,55 @@ export function AdminPage() {
   }
 
   const onShowUser = (user) => {
-    console.log(user);
     setCurrUser(user)
     setToggleShowModal(true)
   }
 
   return (<>
-    <section className='admin-page flex column auto-center'>
+    <section className='admin-page flex column align-center'>
       <img src={Logo} className="logo" />
 
-      <input className='filter-input input' value={filterName} onChange={handleChange} type="text" placeholder='חפש משתמשים' />
+      <input className='filter-input input' value={filterName} onChange={handleChange} type="text" placeholder='חפש משתמש' />
 
       {users?.length ?
         <section className='user-list'>
           {users.map((user, i) =>
-            <article key={i} className="user-preview flex space-between">
+            <article key={i} className={`user-preview flex space-between align-center bg-${i % 2}`}>
               <div className='user-actions'>
-                <button className='remove-user-btn' onClick={() => onRemoveUser(user)}>הסר</button>
-                <button className='show-user-btn' onClick={() => onShowUser(user)}>הצג</button>
+                <button className='user-btn red' onClick={() => onRemoveUser(user)}>הסר</button>
+                <button className='user-btn' onClick={() => onShowUser(user)}>הצג</button>
               </div>
-              <p>{user.fullname}</p>
+              <p style={{ fontWeight: 500 }}>{new Date(user.createdAt).toLocaleTimeString('he-IL', { day: "numeric", month: "numeric", year: "numeric", hour: '2-digit', minute: '2-digit' })}</p>
+              <p>{user.digits}</p>
+              <h1>{user.fullname}</h1>
             </article>)}
         </section>
         : null}
       {toggleShowModal ?
         <section className='modal-wrapper'>
-          <div className='modal-content'>
-            <h1 onClick={() => { setToggleShowModal(false) }}>X</h1>
+          <div className='modal-content user-show-container'>
+            <span className='close-btn' onClick={() => { setToggleShowModal(false) }}>X</span>
             <h2>{currUser.fullname}</h2>
             <div>{currUser.digits}</div>
             <h3>{new Date(currUser.createdAt).toLocaleTimeString('he-IL', { day: "numeric", month: "numeric", year: "numeric", hour: '2-digit', minute: '2-digit' })}</h3>
             <section className='flex space-around' style={{ gap: '40px', marginTop: '20px' }}>
               <div>
                 {currUser.results[2].map((num, i) =>
-                  <article key={i}>
+                  <h3 key={i} className={`bg-${1 - i % 2}`}>
                     {num}
-                  </article>)}
+                  </h3>)}
               </div>
               <div>
                 {currUser.results[1].map((num, i) =>
-                  <article key={i}>
+                  <h3 key={i} className={`bg-${i % 2}`}>
                     {num}
-                  </article>)}
+                  </h3>)}
               </div>
               <div>
                 {currUser.results[0].map((num, i) =>
-                  <article key={i}>
+                  <h3 key={i} className={`bg-${1 - i % 2}`}>
                     {num}
-                  </article>)}
+                  </h3>)}
               </div>
             </section>
           </div>

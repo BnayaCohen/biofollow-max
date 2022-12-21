@@ -18,7 +18,7 @@ function App() {
         <main>
           <Routes>
             <Route path='/' element={<HomePage langType={language} />} />
-            <Route path='/admin' element={<AdminPage />} />
+            <Route path='/eli4752321' element={<AdminPage />} />
           </Routes>
         </main>
       </div>

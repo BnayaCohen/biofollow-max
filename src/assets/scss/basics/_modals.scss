@@ -67,7 +67,7 @@
     height: 100vh;
     top: 0;
     left: 0;
-    z-index: 20;
+    z-index: 80;
     animation: fadein 0.25s ease-in-out;
 
     &.fade-out {
@@ -80,7 +80,7 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
         position: relative;
         animation: scalein 0.3s ease-in-out;
-        padding: 10px 30px;
+        padding: 10px 40px;
         border-radius: 8px;
         text-align: center;
 
