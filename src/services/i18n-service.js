@@ -31,6 +31,14 @@ const gTrans = {
     en: 'Continue',
     he: 'המשך',
   },
+  'fail-inputs': {
+    en: 'Type your details correctly',
+    he: 'בבקשה מלא את הפרטים נכון',
+  },
+  'fail-user-exist': {
+    en: 'Name and digits are already exist',
+    he: 'שם ותווים אלו כבר נמצאים במערכת',
+  },
   'start': {
     en: 'Start',
     he: 'התחל',

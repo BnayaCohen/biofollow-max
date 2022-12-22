@@ -1,39 +1,54 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CardApp } from './CardApp'
 import Logo from '../assets/imgs/edited-logo.png'
 import { i18nService } from '../services/i18n-service'
 import { userService } from '../services/user-service'
 
-export function HomePage({ langType }) {
+export function HomePage({ langType, goHome }) {
 
   const nameInputRef = useRef()
   const digitInputRef = useRef()
+  const namePattern = /^[a-zA-Zא-ת]{2,40}( [a-zA-Zא-ת]{2,40})+$/
   const [userDetails, setUserDetails] = useState({})
   const [isPlaying, setIsPlaying] = useState(false)
-  const namePattern = /^[a-zA-Zא-ת]{2,40}( [a-zA-Zא-ת]{2,40})+$/
   const [validateNameClass, setValidateNameClass] = useState('')
   const [validateDigitClass, setValidateDigitClass] = useState('')
+  const [notification, setNotification] = useState('')
+
+  useEffect(() => {
+    if (goHome) setIsPlaying(false)
+  }, [goHome])
 
   const onStartPlay = async (ev) => {
     ev.preventDefault()
     const fullname = nameInputRef.current.value.trim()
     const digits = digitInputRef.current.value.trim()
 
-    if (!namePattern.test(fullname) || !(digits.length > 0 && digits.length < 5)) return
-    // if (await userService.isUserExist(fullname, digits)) return
+    if (!namePattern.test(fullname) || !(digits.length > 0 && digits.length < 5)) {
+      setNotification(i18nService.getTranslation('fail-inputs', langType))
+      setTimeout(setNotification, 2500, '');
+      return
+    }
+    if (await userService.isUserExist(fullname, digits)) {
+      setNotification(i18nService.getTranslation('fail-user-exist', langType))
+      setTimeout(setNotification, 2500, '');
+      return
+    }
 
     setUserDetails({ fullname, digits })
     setIsPlaying(true)
   }
 
-  const validateInput = () => {
-    if (namePattern.test(nameInputRef.current.value.trim())) setValidateNameClass('green')
-    else setValidateNameClass('red')
+  const validateNameInput = () => {
+    const nameInput = nameInputRef.current.value.trim()
+    if (namePattern.test(nameInput)) setValidateNameClass('green')
+    else nameInput === '' ? '' : setValidateNameClass('red')
   }
 
   const validateDigitInput = () => {
-    if (digitInputRef.current.value.trim().length > 0 && digitInputRef.current.value.trim().length < 5) setValidateDigitClass('green')
-    else setValidateDigitClass('red')
+    const digitsInput = digitInputRef.current.value.trim()
+    if (digitsInput.length > 0 && digitsInput.length < 5) setValidateDigitClass('green')
+    else digitsInput === '' ? '' : setValidateDigitClass('red')
   }
 
   const onSubmitDetails = () => {
@@ -48,7 +63,7 @@ export function HomePage({ langType }) {
         <p>{i18nService.getTranslation('enter-details', langType)}</p>
 
         <form className='flex column' style={{ gap: '5px' }} onSubmit={onStartPlay}>
-          <input className={'login-input ' + validateNameClass} ref={nameInputRef} onChange={validateInput} type="text" placeholder={i18nService.getTranslation('enter-name-input', langType)} />
+          <input className={'login-input ' + validateNameClass} ref={nameInputRef} onChange={validateNameInput} type="text" placeholder={i18nService.getTranslation('enter-name-input', langType)} />
           <input className={'login-input ' + validateDigitClass} ref={digitInputRef} onChange={validateDigitInput} type="text" placeholder={i18nService.getTranslation('enter-digit-input', langType)} />
         </form>
         <button className='btn' onClick={onStartPlay}>{i18nService.getTranslation('continue', langType)}</button>
@@ -56,9 +71,10 @@ export function HomePage({ langType }) {
       :
       <CardApp userDetails={userDetails} onSubmitDetails={onSubmitDetails} langType={langType} />
     }
-    <div className='notification-box success'>
-      <h1 className='success'>yessss</h1>
-    </div>
+    {notification ?
+      <div className='notification-box failure'>
+        <h2>{notification}</h2>
+      </div> : null}
   </>
   )
 }

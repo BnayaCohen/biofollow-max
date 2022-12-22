@@ -1,14 +1,22 @@
 import FlagUS from '../assets/imgs/flag-us.webp'
 import FlagIL from '../assets/imgs/flag-il.webp'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-export function AppHeader({ onChangeLanguage }) {
+export function AppHeader({ onChangeLanguage, setGoHome }) {
 
   const [selectedLang, setSelectedLang] = useState('he')
+  const navigate = useNavigate()
 
   const changeLanguage = (lng) => {
     setSelectedLang(lng)
     onChangeLanguage(lng)
+  }
+
+  const onGoHome = () => {
+    setGoHome(true)
+    navigate('/')
+    setTimeout(setGoHome, 500, false)
   }
 
   return (
@@ -19,7 +27,7 @@ export function AppHeader({ onChangeLanguage }) {
           <img onClick={() => changeLanguage('en')} className={selectedLang === 'en' ? 'selected' : ''} src={FlagUS} />
         </section>
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" className="mercado-match" width="24" height="24" focusable="false">
+        <svg onClick={onGoHome} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" className="mercado-match" width="24" height="24" focusable="false">
           <path d="M23 9v2h-2v7a3 3 0 01-3 3h-4v-6h-4v6H6a3 3 0 01-3-3v-7H1V9l11-7z"></path>
         </svg>
       </div>

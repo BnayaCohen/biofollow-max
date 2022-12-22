@@ -11,7 +11,7 @@
     position: absolute;
     width: 400px;
     z-index: -2;
-    filter: opacity(.7) blur(5px) contrast(.9);
+    filter: opacity(.7) blur(4px) contrast(.9);
     animation: fadein 3s ease-out;
   }
   
@@ -40,6 +40,7 @@
     width: 220px;
     font-size: 1.2rem;
     height: 40px;
+    padding-top: 2px;
   }
   
   .btn{

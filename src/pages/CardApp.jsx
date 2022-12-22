@@ -84,7 +84,6 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
 
   const onFinishPlay = async () => {
     userDetails.results = [...randResults]
-    console.log(userDetails);
     console.log(await userService.addUser(userDetails))
   }
 
