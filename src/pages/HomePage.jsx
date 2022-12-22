@@ -42,13 +42,13 @@ export function HomePage({ langType, goHome }) {
   const validateNameInput = () => {
     const nameInput = nameInputRef.current.value.trim()
     if (namePattern.test(nameInput)) setValidateNameClass('green')
-    else nameInput === '' ? '' : setValidateNameClass('red')
+    else setValidateNameClass(nameInput === '' ? '' : 'red')
   }
 
   const validateDigitInput = () => {
     const digitsInput = digitInputRef.current.value.trim()
     if (digitsInput.length > 0 && digitsInput.length < 5) setValidateDigitClass('green')
-    else digitsInput === '' ? '' : setValidateDigitClass('red')
+    else setValidateDigitClass(digitsInput === '' ? '' : 'red')
   }
 
   const onSubmitDetails = () => {

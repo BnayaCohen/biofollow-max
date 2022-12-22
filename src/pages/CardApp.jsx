@@ -20,6 +20,7 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
 
   const onStartRandom = () => {
     setCards(randCards(cards))
+    // console.time('check')
 
     setToggleRandom(
       setInterval((crds) => setCards(randCards(crds))
@@ -51,13 +52,12 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
     } while (isTwoSame)
     // setTimeout(() => setCards(utilService.get21Cards(window, 50)), 2500)
 
-    if (randResults.length < 3) {
-      randResults.push(numsArr
-        .sort((a, b) => a.y > b.y ? 1 : -1)
-        .map(card => card.num / 10 >= 1 ? card.num + '' : '0' + card.num)
-      )
-      setRandResults(randResults)
-    }
+    randResults.push(numsArr
+      .sort((a, b) => a.y > b.y ? 1 : -1)
+      .map(card => card.num / 10 >= 1 ? card.num + '' : '0' + card.num)
+    )
+    setRandResults(randResults)
+    // console.timeEnd('check')
   }
 
   const onCardSelect = () => {
