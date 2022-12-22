@@ -18,6 +18,7 @@ export function AdminPage() {
   }, [])
 
   const handleChange = async ({ target }) => {
+    console.log(users);
     setFilterName(target.value)
     setUsers(await userService.query({ txt: target.value }))
   }

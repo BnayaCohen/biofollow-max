@@ -9,7 +9,7 @@ function getTranslation(key, lang) {
 const gTrans = {
   title: {
     en: 'Welcome to BioFollow',
-    he: 'ברוכים הבאים לביו פולו'
+    he: 'ברוכים הבאים לביו-פולו'
   },
   language: {
     en: 'Language',

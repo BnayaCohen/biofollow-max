@@ -20,7 +20,7 @@ export function HomePage({ langType }) {
     const digits = digitInputRef.current.value.trim()
 
     if (!namePattern.test(fullname) || !(digits.length > 0 && digits.length < 5)) return
-    if (await userService.isUserExist(fullname, digits)) return
+    // if (await userService.isUserExist(fullname, digits)) return
 
     setUserDetails({ fullname, digits })
     setIsPlaying(true)
@@ -56,6 +56,9 @@ export function HomePage({ langType }) {
       :
       <CardApp userDetails={userDetails} onSubmitDetails={onSubmitDetails} langType={langType} />
     }
+    <div className='notification-box success'>
+      <h1 className='success'>yessss</h1>
+    </div>
   </>
   )
 }
