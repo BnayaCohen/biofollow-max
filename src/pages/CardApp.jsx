@@ -73,7 +73,7 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
 
   const randCards = (cards) => {
     const [startX, endX] = [((window.width / 5) / 2) - cards[0].width / 2, window.width - cards[0].width - 5]
-    const [startY, endY] = [50, window.height - 130]
+    const [startY, endY] = [20, window.height - 150]
 
     return cards.map(card => {
       card.x = utilService.getRandomIntInc(startX, endX)
@@ -114,8 +114,11 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
       {randResults.length === 3 && !toggleCardsModal ? <>
         <div className='screen'></div>
         <section className='finish-modal-container'>
-          <h1>{i18nService.getTranslation('biofollow-thanks', langType)}</h1>
-          <h3>{i18nService.getTranslation('biofollow-submitted', langType)}</h3>
+          <h1>{userDetails.fullname + ' - ' + userDetails.digits}</h1>
+          <div>
+            <h3>{i18nService.getTranslation('biofollow-thanks', langType)}</h3>
+            <h3>{i18nService.getTranslation('biofollow-submitted', langType)}</h3>
+          </div>
           <button className='btn' onClick={onSubmitDetails}>{i18nService.getTranslation('biofollow-back', langType)}</button>
         </section>
       </> : null}

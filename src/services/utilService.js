@@ -44,7 +44,7 @@ function loadFromStorage(key) {
   return data ? JSON.parse(data) : undefined
 }
 
-function debounce(func, wait = 500) {
+function debounce(func, wait = 30) {
   let timeout
 
   return function executedFunction(...args) {
@@ -159,7 +159,7 @@ export const TypeWriter = class TypeWriter {
       // Move to next word
       this.wordIndex++
       // Pause before start typing
-      typeSpeed = 500
+      typeSpeed = 30
     }
 
     setTimeout(() => this.type(), typeSpeed)
@@ -201,7 +201,7 @@ function get21Cards(windowSize) {
   const cardsArr = []
   const cardWidth = windowSize.width / 6 > 70 ? 70 : windowSize.width / 6
   const heightDivide = cardWidth / 12 < 5.5 ? 5.5 : cardWidth / 12
-  const heightDistance = 50
+  const heightDistance = 30
   const widthDistance = ((windowSize.width / 5) / 2) - cardWidth / 2
 
   for (let i = 0; i < 4; i++) {
@@ -231,7 +231,7 @@ function get6Cards(windowSize) {
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       const newCard = {
-        num: getRandomIntInc(1, 50),
+        num: getRandomIntInc(1, 3),
         width: cardWidth
       }
       cardsArr.push(newCard)
