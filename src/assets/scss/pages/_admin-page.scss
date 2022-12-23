@@ -17,7 +17,10 @@
       font-size: 1.1rem;
       font-weight: 500;
       transition: all .3s;
-      margin: 0 6px;
+      
+      &:last-child{
+        margin-left: 20px;
+      }
 
       &:hover {
         text-decoration: none;

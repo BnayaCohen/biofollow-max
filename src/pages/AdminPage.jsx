@@ -50,8 +50,11 @@ export function AdminPage() {
                 <button className='user-btn' onClick={() => onShowUser(user)}>הצג</button>
               </div>
               <p style={{ fontWeight: 500 }}>{new Date(user.createdAt).toLocaleTimeString('he-IL', { day: "numeric", month: "numeric", year: "numeric", hour: '2-digit', minute: '2-digit' })}</p>
-              <p>{user.digits}</p>
-              <h1>{user.fullname}</h1>
+              
+              <div className='text-center'>
+                <h1>{user.fullname}</h1>
+                <p>{user.digits}</p>
+              </div>
             </article>)}
         </section>
         : null}
