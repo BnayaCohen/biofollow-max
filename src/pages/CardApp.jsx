@@ -46,7 +46,7 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
       })
 
       if (changeIdx) {
-        numsArr[changeIdx].y = utilService.getRandomIntInc(50, window.height - 130)
+        numsArr[changeIdx].y = utilService.getRandomIntInc(20, window.height - 130)
         setTimeout(() => setCards(numsArr), 300)
       }
     } while (isTwoSame)

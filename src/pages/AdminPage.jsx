@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import Logo from '../assets/imgs/edited-logo.png'
 import { userService } from '../services/user-service'
 import { utilService } from '../services/utilService'
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export function AdminPage() {
 
@@ -10,6 +11,7 @@ export function AdminPage() {
   const [toggleShowModal, setToggleShowModal] = useState(false)
   const [users, setUsers] = useState([])
   const [currUser, setCurrUser] = useState(null)
+  const [selectedDate, setselectedDate] = useState(new Date());
 
   useEffect(() => {
     ; (async () => {
@@ -17,8 +19,15 @@ export function AdminPage() {
     })()
   }, [])
 
+  useEffect(() => {
+    ; (async () => {
+      const usrs = await userService.query({ txt: filterName })
+      console.log(new Date(usrs[0].createdAt).toLocaleDateString());
+      setUsers(usrs.filter((user) => selectedDate === '' || new Date(user.createdAt).toLocaleDateString() === selectedDate.toLocaleDateString()))
+    })()
+  }, [selectedDate])
+
   const handleChange = async ({ target }) => {
-    console.log(users);
     setFilterName(target.value)
     setUsers(await userService.query({ txt: target.value }))
   }
@@ -40,6 +49,10 @@ export function AdminPage() {
       <img src={Logo} className="logo" />
 
       <input className='filter-input input' value={filterName} onChange={handleChange} type="text" placeholder='חפש משתמש' />
+      <div className='flex row align-center' style={{ gap: '6px', marginBottom: '15px' }}>
+        <button onClick={() => setselectedDate('')} className='user-btn'>אפס</button>
+        <DatePicker className='date-picker' selected={selectedDate} onChange={(date) => setselectedDate(date)} />
+      </div>
 
       {users?.length ?
         <section className='user-list'>
@@ -50,7 +63,7 @@ export function AdminPage() {
                 <button className='user-btn' onClick={() => onShowUser(user)}>הצג</button>
               </div>
               <p style={{ fontWeight: 500 }}>{new Date(user.createdAt).toLocaleTimeString('he-IL', { day: "numeric", month: "numeric", year: "numeric", hour: '2-digit', minute: '2-digit' })}</p>
-              
+
               <div className='text-center'>
                 <h1>{user.fullname}</h1>
                 <p>{user.digits}</p>

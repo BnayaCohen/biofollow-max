@@ -231,7 +231,7 @@ function get6Cards(windowSize) {
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       const newCard = {
-        num: getRandomIntInc(1, 3),
+        num: getRandomIntInc(1, 50),
         width: cardWidth
       }
       cardsArr.push(newCard)

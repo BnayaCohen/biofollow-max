@@ -1,35 +1,42 @@
 .admin-page {
-  padding: 20px;
+  padding: 10px;
   // background-color: #FCF1E1;
   background-color: #f0f2f5;
   height: 100vh;
+  text-align: center;
+
+  .date-picker {
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  .user-btn {
+    cursor: pointer;
+    font-family: inherit;
+    background-color: #fff;
+    border: .5px solid gray;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all .3s;
+    height: 28px;
+
+    &:last-child {
+      margin-left: 20px;
+    }
+
+    &:hover {
+      text-decoration: none;
+      background-color: #e8eef6;
+      transform: scale(1.05);
+      box-shadow: 0 0 4px 1px rgb(0 0 0 / 10%);
+    }
+  }
 
   .user-preview {
     width: 100vw;
     padding: 8px 10px;
     border-top: 1px solid gray;
-
-    .user-btn {
-      cursor: pointer;
-      font-family: inherit;
-      background-color: #fff;
-      border: .5px solid gray;
-      border-radius: 4px;
-      font-size: 1.1rem;
-      font-weight: 500;
-      transition: all .3s;
-      
-      &:last-child{
-        margin-left: 20px;
-      }
-
-      &:hover {
-        text-decoration: none;
-        background-color: #e8eef6;
-        transform: scale(1.05);
-        box-shadow: 0 0 4px 1px rgb(0 0 0 / 10%);
-      }
-    }
 
     .red {
       background-color: lightcoral;
@@ -38,7 +45,7 @@
 
   .logo {
     width: 100px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     filter: blur(1px);
   }
 
@@ -56,7 +63,7 @@
   .filter-input {
     background-color: #fff;
     width: 220px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
 }
 
@@ -64,8 +71,8 @@
   background-color: #82c8ee;
 }
 
-.user-show-container{
-  
+.user-show-container {
+
   .close-btn {
     position: absolute;
     top: 0;
@@ -77,23 +84,24 @@
     background-color: grey;
     border-radius: 8px;
     margin: 3px 2px;
-    
-    &:hover{
+
+    &:hover {
       background-color: #34acef;
     }
-    
-    &:active{
+
+    &:active {
       background-color: #34acef;
     }
   }
-  .bg-1{
+
+  .bg-1 {
     padding: 2px;
     border-radius: 3px;
     margin-bottom: 2px;
   }
 
-  div{
+  div {
     margin: 5px;
   }
-  
+
 }
