@@ -1,5 +1,5 @@
-import FlagUS from '../assets/imgs/flag-us.webp'
-import FlagIL from '../assets/imgs/flag-il.webp'
+import FlagUS from '../assets/imgs/flag-us.png'
+import FlagIL from '../assets/imgs/flag-il.png'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 

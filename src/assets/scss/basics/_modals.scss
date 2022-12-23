@@ -69,6 +69,8 @@
     left: 0;
     z-index: 80;
     animation: fadein 0.25s ease-in-out;
+    overflow: auto;
+    padding:  20px 0;
 
     &.fade-out {
         animation: fadeout 0.25s ease-in-out forwards;

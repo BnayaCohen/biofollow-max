@@ -33,13 +33,18 @@
     }
   }
 
-  .user-preview {
-    width: 100vw;
-    padding: 8px 10px;
-    border-top: 1px solid gray;
+  .user-list {
+    overflow: auto;
+    margin-bottom: 35px;
 
-    .red {
-      background-color: lightcoral;
+    .user-preview {
+      width: 100vw;
+      padding: 8px 10px;
+      border-top: 1px solid gray;
+
+      .red {
+        background-color: lightcoral;
+      }
     }
   }
 
