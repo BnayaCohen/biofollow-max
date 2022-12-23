@@ -1,6 +1,7 @@
 .admin-page {
   padding: 20px;
-  background-color: #FCF1E1;
+  // background-color: #FCF1E1;
+  background-color: #f0f2f5;
   height: 100vh;
 
   .user-preview {
@@ -38,7 +39,7 @@
   .logo {
     width: 100px;
     margin-bottom: 20px;
-    filter: blur(0.5px);
+    filter: blur(1px);
   }
 
   h1 {
