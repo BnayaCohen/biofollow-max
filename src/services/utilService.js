@@ -227,13 +227,16 @@ function get21Cards(windowSize) {
 function get6Cards(windowSize) {
   const cardsArr = []
   const cardWidth = windowSize.width / 6 > 55 ? 55 : windowSize.width / 6
+  const nums = []
+  for (let i = 1; i <= 50; i++) { nums.push(i) }
 
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       const newCard = {
-        num: getRandomIntInc(1, 50),
+        num: nums[getRandomIntInc(0, nums.length - 1)],
         width: cardWidth
       }
+      nums.splice(nums.findIndex(c => newCard.num === c), 1)
       cardsArr.push(newCard)
     }
   }

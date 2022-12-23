@@ -11,7 +11,7 @@ export function AdminPage() {
   const [toggleShowModal, setToggleShowModal] = useState(false)
   const [users, setUsers] = useState([])
   const [currUser, setCurrUser] = useState(null)
-  const [selectedDate, setselectedDate] = useState(new Date());
+  const [selectedDate, setselectedDate] = useState('');
 
   useEffect(() => {
     ; (async () => {
@@ -22,7 +22,6 @@ export function AdminPage() {
   useEffect(() => {
     ; (async () => {
       const usrs = await userService.query({ txt: filterName })
-      console.log(new Date(usrs[0].createdAt).toLocaleDateString());
       setUsers(usrs.filter((user) => selectedDate === '' || new Date(user.createdAt).toLocaleDateString() === selectedDate.toLocaleDateString()))
     })()
   }, [selectedDate])
@@ -50,7 +49,7 @@ export function AdminPage() {
 
       <input className='filter-input input' value={filterName} onChange={handleChange} type="text" placeholder='חפש משתמש' />
       <div className='flex row align-center' style={{ gap: '6px', marginBottom: '15px' }}>
-        <button onClick={() => setselectedDate('')} className='user-btn'>אפס</button>
+        <button onClick={() => setselectedDate('')} className='user-btn' style={{ width: '-webkit-fill-available' }}>איפוס תאריך</button>
         <DatePicker className='date-picker' selected={selectedDate} onChange={(date) => setselectedDate(date)} />
       </div>
 
