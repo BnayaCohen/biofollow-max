@@ -58,7 +58,7 @@
 }
 
 .modal-wrapper {
-    position: fixed;
+    position: absolute;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
@@ -70,7 +70,7 @@
     z-index: 80;
     animation: fadein 0.25s ease-in-out;
     overflow: auto;
-    padding:  35px 0;
+    // padding:  35px 0;
 
     &.fade-out {
         animation: fadeout 0.25s ease-in-out forwards;
@@ -83,9 +83,10 @@
         position: relative;
         animation: scalein 0.3s ease-in-out;
         padding: 10px 40px;
+        padding-bottom: 80px;
         border-radius: 8px;
         text-align: center;
-
+// height: 100%;
         &>* {
             max-width: 100%;
         }
