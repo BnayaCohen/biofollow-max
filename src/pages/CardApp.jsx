@@ -12,6 +12,7 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
   const [toggleRandom, setToggleRandom] = useState(null)
   const [toggleCardsModal, setToggleCardsModal] = useState(false)
   const [randResults, setRandResults] = useState([])
+  const [startTime, setStartTime] = useState(null)
 
   useEffect(() => {
     if (!toggleRandom)
@@ -20,7 +21,8 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
 
   const onStartRandom = () => {
     setCards(randCards(cards))
-    // console.time('check')
+
+    if (randResults.length === 0) setStartTime(Date.now())
 
     setToggleRandom(
       setInterval((crds) => setCards(randCards(crds))
@@ -57,11 +59,11 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
       .map(card => card.num / 10 >= 1 ? card.num + '' : '0' + card.num)
     )
     setRandResults(randResults)
-    // console.timeEnd('check')
   }
 
   const onCardSelect = () => {
     if (randResults.length === 3) {
+      userDetails.times = (Date.now() - startTime) / 1000
       onFinishPlay()
       setToggleCardsModal(false)
       return
