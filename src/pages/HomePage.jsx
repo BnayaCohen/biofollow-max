@@ -24,18 +24,14 @@ export function HomePage({ langType, goHome }) {
     const fullname = nameInputRef.current.value.trim()
     const digits = digitInputRef.current.value.trim()
 
-    if (!namePattern.test(fullname) || !(digits.length > 0 && digits.length < 5)) {
+    if (!namePattern.test(fullname) || !(digits.length > 8 && digits.length < 40)) {
       setNotification(i18nService.getTranslation('fail-inputs', langType))
       setTimeout(setNotification, 2500, '');
       return
     }
-    if (await userService.isUserExist(fullname, digits)) {
-      setNotification(i18nService.getTranslation('fail-user-exist', langType))
-      setTimeout(setNotification, 2500, '');
-      return
-    }
 
-    setUserDetails({ fullname, digits })
+    const data = await userService.getUserCounter(fullname, digits)
+    setUserDetails({ fullname, digits, counter: data.userCounter + 1 })
     setIsPlaying(true)
   }
 
@@ -47,7 +43,7 @@ export function HomePage({ langType, goHome }) {
 
   const validateDigitInput = () => {
     const digitsInput = digitInputRef.current.value.trim()
-    if (digitsInput.length > 0 && digitsInput.length < 5) setValidateDigitClass('green')
+    if (digitsInput.length > 8 && digitsInput.length < 40) setValidateDigitClass('green')
     else setValidateDigitClass(digitsInput === '' ? '' : 'red')
   }
 

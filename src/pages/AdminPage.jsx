@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Logo from '../assets/imgs/edited-logo.png'
 import { userService } from '../services/user-service'
-import { utilService } from '../services/utilService'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -66,6 +65,7 @@ export function AdminPage() {
               <div className='text-center'>
                 <h1>{user.fullname}</h1>
                 <p>{user.digits}</p>
+                <p>פעם: <span>{user.counter || '?'}</span> זמן: <span>{+user.times?.toFixed(1) || '?'}</span></p>
               </div>
             </article>)}
         </section>
@@ -77,7 +77,9 @@ export function AdminPage() {
             <h2>{currUser.fullname}</h2>
             <div>{currUser.digits}</div>
             <h3>{new Date(currUser.createdAt).toLocaleTimeString('he-IL', { day: "numeric", month: "numeric", year: "numeric", hour: '2-digit', minute: '2-digit' })}</h3>
-            <section className='flex space-around' style={{ gap: '40px', marginTop: '20px' }}>
+            <p>פעם: <span>{currUser.counter || '?'}</span> זמן: <span>{+currUser.times?.toFixed(1) || '?'}</span></p>
+
+            <section className='flex space-around' style={{ gap: '40px', marginTop: '10px' }}>
               <div>
                 {currUser.results[2].map((num, i) =>
                   <h3 key={i} className={`bg-${1 - i % 2}`}>

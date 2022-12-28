@@ -2,7 +2,7 @@ import { httpService } from './http-service.js'
 
 export const userService = {
   getById,
-  isUserExist,
+  getUserCounter,
   // signup,
   // login,
   // logout,
@@ -52,9 +52,9 @@ async function removeUser(userId) {
   }
 }
 
-async function isUserExist(fullname, digits) {
+async function getUserCounter(fullname, digits) {
   try {
-    return await httpService.get('user/isExist', { params: {fullname, digits} })
+    return await httpService.get('user/counter', { params: {fullname, digits} })
   } catch (err) {
     console.log(err)
     console.error('Something went wrong try again later')

@@ -24,8 +24,8 @@ const gTrans = {
     he: '...שם מלא',
   },
   'enter-digit-input': {
-    en: 'Enter 1-4 digits',
-    he: 'הכנס 1 עד 4 תווים',
+    en: 'Enter phone or Email',
+    he: 'הכנס טלפון או אימייל',
   },
   'continue': {
     en: 'Continue',
