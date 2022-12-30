@@ -13,6 +13,7 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
   const [toggleCardsModal, setToggleCardsModal] = useState(false)
   const [randResults, setRandResults] = useState([])
   const [startTime, setStartTime] = useState(null)
+  //use reducer
 
   useEffect(() => {
     if (!toggleRandom)
