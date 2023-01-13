@@ -1,41 +1,62 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer } from 'react'
 import { CardList } from '../cmps/CardList'
 import { useWindowDimensions } from '../customHooks/useWindowDimensions'
 import { i18nService } from '../services/i18n-service'
 import { userService } from '../services/user-service'
 import { utilService } from '../services/utilService'
 
+const initialState = {
+  cards: [],
+  toggleRandom: null,
+  toggleCardsModal: false,
+  randResults: [],
+  startTime: null,
+}
+
+function appReducer(state, action) {
+  switch (action.type) {
+    case 'setCards':
+      return { ...state, cards: action.cards }
+    case 'setToggleRandom':
+      return { ...state, toggleRandom: action.toggleRandom }
+    case 'setToggleCardsModal':
+      return { ...state, toggleCardsModal: action.toggleCardsModal }
+    case 'setRandResults':
+      return { ...state, randResults: action.randResults }
+    case 'setStartTime':
+      return { ...state, startTime: action.startTime }
+    default:
+      return state
+  }
+}
+
 export function CardApp({ userDetails, onSubmitDetails, langType }) {
 
   const window = useWindowDimensions()
-  const [cards, setCards] = useState([])
-  const [toggleRandom, setToggleRandom] = useState(null)
-  const [toggleCardsModal, setToggleCardsModal] = useState(false)
-  const [randResults, setRandResults] = useState([])
-  const [startTime, setStartTime] = useState(null)
-  //use reducer
+  const [state, dispatch] = useReducer(appReducer, initialState);
 
   useEffect(() => {
-    if (!toggleRandom)
-      setCards(utilService.get21Cards(window))
+    if (!state.toggleRandom)
+      dispatch({ type: 'setCards', cards: utilService.get21Cards(window) })
   }, [window])
 
   const onStartRandom = () => {
-    setCards(randCards(cards))
+    dispatch({ type: 'setCards', cards: randCards(state.cards) })
 
-    if (randResults.length === 0) setStartTime(Date.now())
+    if (state.randResults.length === 0) dispatch({ type: 'setStartTime', startTime: Date.now() })
 
-    setToggleRandom(
-      setInterval((crds) => setCards(randCards(crds))
-        , 800, cards))
+    dispatch({
+      type: 'setToggleRandom', toggleRandom: setInterval((crds) => dispatch({ type: 'setCards', cards: randCards(crds) })
+        , 800, state.cards)
+    })
   }
 
   const onStopRandom = () => {
-    clearInterval(toggleRandom)
-    setToggleRandom(null)
-    setToggleCardsModal(true)
+    clearInterval(state.toggleRandom)
+    dispatch({ type: 'setToggleRandom', toggleRandom: null })
+    dispatch({ type: 'setToggleCardsModal', toggleCardsModal: true })
 
-    const numsArr = JSON.parse(JSON.stringify(cards))
+    const numsArr = JSON.parse(JSON.stringify(state.cards))
     let isTwoSame
     do {
       isTwoSame = false
@@ -50,27 +71,27 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
 
       if (changeIdx) {
         numsArr[changeIdx].y = utilService.getRandomIntInc(20, window.height - 130)
-        setTimeout(() => setCards(numsArr), 300)
+        setTimeout(() => dispatch({ type: 'setCards', cards: numsArr }), 300)
       }
     } while (isTwoSame)
-    // setTimeout(() => setCards(utilService.get21Cards(window, 50)), 2500)
+    // setTimeout(() => dispatch({ type: 'setCards', cards: utilService.get21Cards(window, 50) }), 2500)
 
-    randResults.push(numsArr
+    state.randResults.push(numsArr
       .sort((a, b) => a.y > b.y ? 1 : -1)
       .map(card => card.num / 10 >= 1 ? card.num + '' : '0' + card.num)
     )
-    setRandResults(randResults)
+    dispatch({ type: 'setRandResults', randResults: state.randResults })
   }
 
   const onCardSelect = () => {
-    if (randResults.length === 3) {
-      userDetails.times = (Date.now() - startTime) / 1000
+    if (state.randResults.length === 3) {
+      userDetails.times = (Date.now() - state.startTime) / 1000
       onFinishPlay()
-      setToggleCardsModal(false)
+      dispatch({ type: 'setToggleCardsModal', toggleCardsModal: false })
       return
     }
 
-    setToggleCardsModal(false)
+    dispatch({ type: 'setToggleCardsModal', toggleCardsModal: false })
     onStartRandom()
   }
 
@@ -86,25 +107,25 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
   }
 
   const onFinishPlay = async () => {
-    userDetails.results = [...randResults]
+    userDetails.results = [...state.randResults]
     await userService.addUser(userDetails)
   }
 
   return (
     <div className='card-app'>
-      {randResults.length === 0 || toggleRandom ? <section className={'action-panel ' + (toggleRandom ? 'on-random' : '')} >
-        {!toggleRandom ? <h1>{i18nService.getTranslation('press-to-shuffle', langType)}</h1> : null}
-        {!toggleRandom ?
+      {state.randResults.length === 0 || state.toggleRandom ? <section className={'action-panel ' + (state.toggleRandom ? 'on-random' : '')} >
+        {!state.toggleRandom ? <h1>{i18nService.getTranslation('press-to-shuffle', langType)}</h1> : null}
+        {!state.toggleRandom ?
           <button className='btn' onClick={onStartRandom}>{i18nService.getTranslation('start', langType)}</button>
           :
           <button className='btn' onClick={onStopRandom}>{i18nService.getTranslation('stop-shuffle', langType)}</button>
         }
       </section> : null}
 
-      {toggleCardsModal ? <>
+      {state.toggleCardsModal ? <>
         <div className='screen'></div>
         <section className='shape-container'>
-          <h1 className='card-select-title'>{i18nService.getTranslation(randResults.length === 3 ? 'last-card' : 'select-card', langType)}</h1>
+          <h1 className='card-select-title'>{i18nService.getTranslation(state.randResults.length === 3 ? 'last-card' : 'select-card', langType)}</h1>
           <section className='card-list'>
             {utilService.get6Cards(window).map((card, i) =>
               <article key={i} className={`card-item select-change-${i % 2}`} onClick={onCardSelect} style={{ width: card.width, height: card.width * 1.5 }}>
@@ -114,7 +135,7 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
         </section>
       </> : null}
 
-      {randResults.length === 3 && !toggleCardsModal ? <>
+      {state.randResults.length === 3 && !state.toggleCardsModal ? <>
         <div className='screen'></div>
         <section className='finish-modal-container'>
           <h1>{userDetails.fullname + ' - ' + userDetails.digits}</h1>
@@ -127,7 +148,7 @@ export function CardApp({ userDetails, onSubmitDetails, langType }) {
       </> : null}
 
       <section className='cards-display'>
-        <CardList cards={cards} />
+        <CardList cards={state.cards} />
       </section>
     </div>
   )
