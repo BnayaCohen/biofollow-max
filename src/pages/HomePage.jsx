@@ -4,6 +4,31 @@ import Logo from '../assets/imgs/edited-logo.png'
 import { i18nService } from '../services/i18n-service'
 import { userService } from '../services/user-service'
 
+const initialState = {
+  userDetails: {},
+  isPlaying: false,
+  validateNameClass: '',
+  validateDigitClass: '',
+  notification: '',
+}
+
+function homeReducer(state, action) {
+  switch (action.type) {
+    case 'setUserDetails':
+      return { ...state, userDetails: action.userDetails }
+    case 'setIsPlaying':
+      return { ...state, isPlaying: action.isPlaying }
+    case 'setValidateNameClass':
+      return { ...state, validateNameClass: action.validateNameClass }
+    case 'setValidateDigitClass':
+      return { ...state, validateDigitClass: action.validateDigitClass }
+    case 'setNotification':
+      return { ...state, notification: action.notification }
+    default:
+      return state
+  }
+}
+
 export function HomePage({ langType, goHome }) {
 
   const nameInputRef = useRef()
