@@ -34,14 +34,10 @@ export function HomePage({ langType, goHome }) {
   const nameInputRef = useRef()
   const digitInputRef = useRef()
   const namePattern = /^[a-zA-Zא-ת]{2,40}( [a-zA-Zא-ת]{2,40})+$/
-  const [userDetails, setUserDetails] = useState({})
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [validateNameClass, setValidateNameClass] = useState('')
-  const [validateDigitClass, setValidateDigitClass] = useState('')
-  const [notification, setNotification] = useState('')
+  const [state, dispatch] = useReducer(homeReducer, initialState);
 
   useEffect(() => {
-    if (goHome) setIsPlaying(false)
+    if (goHome) dispatch({ type: 'setIsPlaying', isPlaying: false })
   }, [goHome])
 
   const onStartPlay = async (ev) => {
@@ -50,51 +46,51 @@ export function HomePage({ langType, goHome }) {
     const digits = digitInputRef.current.value.trim()
 
     if (!namePattern.test(fullname) || !(digits.length > 8 && digits.length < 40)) {
-      setNotification(i18nService.getTranslation('fail-inputs', langType))
-      setTimeout(setNotification, 2500, '');
+      dispatch({ type: 'setNotification', notification: i18nService.getTranslation('fail-inputs', langType) })
+      setTimeout(dispatch, 2500, { type: 'setNotification', notification: '' });
       return
     }
 
     const data = await userService.getUserCounter(fullname, digits)
-    setUserDetails({ fullname, digits, counter: data.userCounter + 1 })
-    setIsPlaying(true)
+    dispatch({ type: 'setUserDetails', userDetails: { fullname, digits, counter: data.userCounter + 1 } })
+    dispatch({ type: 'setIsPlaying', isPlaying: true })
   }
 
   const validateNameInput = () => {
     const nameInput = nameInputRef.current.value.trim()
-    if (namePattern.test(nameInput)) setValidateNameClass('green')
-    else setValidateNameClass(nameInput === '' ? '' : 'red')
+    if (namePattern.test(nameInput)) dispatch({ type: 'setValidateNameClass', validateNameClass: 'green' })
+    else dispatch({ type: 'setValidateNameClass', validateNameClass: nameInput === '' ? '' : 'red' })
   }
 
   const validateDigitInput = () => {
     const digitsInput = digitInputRef.current.value.trim()
-    if (digitsInput.length > 8 && digitsInput.length < 40) setValidateDigitClass('green')
-    else setValidateDigitClass(digitsInput === '' ? '' : 'red')
+    if (digitsInput.length > 8 && digitsInput.length < 40) dispatch({ type: 'setValidateDigitClass', validateDigitClass: 'green' })
+    else dispatch({ type: 'setValidateDigitClass', validateDigitClass: digitsInput === '' ? '' : 'red' })
   }
 
   const onSubmitDetails = () => {
-    setIsPlaying(false)
+    dispatch({ type: 'setIsPlaying', isPlaying: false })
   }
 
   return (<>
-    {!isPlaying ?
+    {!state.isPlaying ?
       <section className='home-page flex column auto-center'>
         <img src={Logo} className="logo" />
         <h1>{i18nService.getTranslation('title', langType)}</h1>
         <p>{i18nService.getTranslation('enter-details', langType)}</p>
 
         <form className='flex column' style={{ gap: '5px' }} onSubmit={onStartPlay}>
-          <input className={'login-input ' + validateNameClass} ref={nameInputRef} onChange={validateNameInput} type="text" placeholder={i18nService.getTranslation('enter-name-input', langType)} />
-          <input className={'login-input ' + validateDigitClass} ref={digitInputRef} onChange={validateDigitInput} type="text" placeholder={i18nService.getTranslation('enter-digit-input', langType)} />
+          <input className={'login-input ' + state.validateNameClass} ref={nameInputRef} onChange={validateNameInput} type="text" placeholder={i18nService.getTranslation('enter-name-input', langType)} />
+          <input className={'login-input ' + state.validateDigitClass} ref={digitInputRef} onChange={validateDigitInput} type="text" placeholder={i18nService.getTranslation('enter-digit-input', langType)} />
         </form>
         <button className='btn' onClick={onStartPlay}>{i18nService.getTranslation('continue', langType)}</button>
       </section>
       :
-      <CardApp userDetails={userDetails} onSubmitDetails={onSubmitDetails} langType={langType} />
+      <CardApp userDetails={state.userDetails} onSubmitDetails={onSubmitDetails} langType={langType} />
     }
-    {notification ?
+    {state.notification ?
       <div className='notification-box failure'>
-        <h2>{notification}</h2>
+        <h2>{state.notification}</h2>
       </div> : null}
   </>
   )
