@@ -4,13 +4,38 @@ import { userService } from '../services/user-service'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+const initialState = {
+  filterName: '',
+  toggleShowModal: false,
+  users: [],
+  currUser: null,
+  selectedDate: '',
+}
+
+function adminReducer(state, action) {
+  switch (action.type) {
+    case 'setFilterName':
+      return { ...state, filterName: action.filterName }
+    case 'setToggleShowModal':
+      return { ...state, toggleShowModal: action.toggleShowModal }
+    case 'setUsers':
+      return { ...state, users: action.users }
+    case 'setCurrUser':
+      return { ...state, currUser: action.currUser }
+    case 'setselectedDate':
+      return { ...state, selectedDate: action.selectedDate }
+    default:
+      return state
+  }
+}
+
 export function AdminPage() {
 
-  const [filterName, setFilterName] = useState('')
-  const [toggleShowModal, setToggleShowModal] = useState(false)
-  const [users, setUsers] = useState([])
-  const [currUser, setCurrUser] = useState(null)
-  const [selectedDate, setselectedDate] = useState('');
+  // const [filterName, setFilterName] = useState('')
+  // const [toggleShowModal, setToggleShowModal] = useState(false)
+  // const [users, setUsers] = useState([])
+  // const [currUser, setCurrUser] = useState(null)
+  // const [selectedDate, setselectedDate] = useState('');
 
   useEffect(() => {
     ; (async () => {
